@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id = "toUpper" class = "preprocessor.PreProcessorToUpperImpl"/>
+    <bean id = "toLower" class = "preprocessor.PreProcessorToLowerImpl"/>
+
+    <bean id = "errUp" class = "renderer.RendererErrImpl">
+        <constructor-arg name = "preProcessor" ref="toUpper"/>
+    </bean>
+    <bean id = "errLow" class = "renderer.RendererErrImpl">
+        <constructor-arg name = "preProcessor" ref="toLower"/>
+    </bean>
+
+    <bean id = "stdUp" class = "renderer.RendererStandardImpl">
+        <constructor-arg name = "preProcessor" ref="toUpper"/>
+    </bean>
+    <bean id = "stdLow" class = "renderer.RendererStandardImpl">
+        <constructor-arg name = "preProcessor" ref="toLower"/>
+    </bean>
+
+    <bean id = "printerWithPrefix" class = "printer.PrinterWithPrefixImpl">
+        <constructor-arg name = "renderer" ref = "errUp"/>
+        <property name = "prefix" value = "Prefix "/>
+    </bean>
+    <bean id = "prefErrLow" class = "printer.PrinterWithPrefixImpl">
+        <constructor-arg name = "renderer" ref = "errLow"/>
+        <property name = "prefix" value = "Prefix "/>
+    </bean>
+
+    <bean id = "prefStdUp" class = "printer.PrinterWithPrefixImpl">
+        <constructor-arg name = "renderer" ref = "stdUp"/>
+        <property name = "prefix" value = "Prefix "/>
+    </bean>
+    <bean id = "prefStdLow" class = "printer.PrinterWithPrefixImpl">
+        <constructor-arg name = "renderer" ref = "stdLow"/>
+        <property name = "prefix" value = "Prefix "/>
+    </bean>
+
+    <bean id = "timeErrUp" class = "printer.PrinterWithDateTimeImpl">
+        <constructor-arg name = "renderer" ref = "errUp"/>
+    </bean>
+    <bean id = "timeErrLow" class = "printer.PrinterWithDateTimeImpl">
+        <constructor-arg name = "renderer" ref = "errLow"/>
+    </bean>
+
+    <bean id = "timeStdUp" class = "printer.PrinterWithDateTimeImpl">
+        <constructor-arg name = "renderer" ref = "stdUp"/>
+    </bean>
+    <bean id = "timeStdLow" class = "printer.PrinterWithDateTimeImpl">
+        <constructor-arg name = "renderer" ref = "stdLow"/>
+    </bean>
+
+</beans>
